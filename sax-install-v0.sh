@@ -29,6 +29,11 @@ echo "--------------------------------------------------------------------------
 echo "JAVA_HOME is - $java_home"
 echo "Installing StreamAnalytix HDInsight EdgeNode with user : $(whoami) "
 echo "StreamAnalytix @ Azure Marketplace Download : Today is $(date)"
+echo "StreamAnalytix @ HDInsight EdgeNode is $(hostname) & ip is $(hostname -i)"
+echo "CLUSTER_NAME is : $CLUSTER_NAME" 
+echo "HDI_ADMIN is : $HDI_ADMIN" 
+echo "SSH_USER is : $SSH_USER" 
+echo "SSH_PWD is : $SSH_PWD"
 echo "--------------------------------------------------------------------------------"
 
 ## retry function ##
