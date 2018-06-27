@@ -220,7 +220,7 @@ SPARK_YARN_RESOURCE_MANAGER_HOST=$YARN_RESOURCE_MANAGER
 SPARK_JOB_SUBMIT_MODE="spark-submit"
 
 
-echo "YARN_RESOURCE_MANAGER : $YARN_RESOURCE_MANAGER"
+echo "YARN_RESOURCE_MANAGER : $PRIMARY_HEAD_NODE"
 echo "SPARK_YARN_RESOURCE_MANAGER_HOST : $SPARK_YARN_RESOURCE_MANAGER_HOST" 
 echo "SPARK_HISTORY_SERVER : $SPARK_HISTORY_SERVER"
 ## replace SPARK2 configurations at env-config.yaml
@@ -259,11 +259,11 @@ echo "-----------------HIVE-----------------"
 
 # get hive meta store hostname
 HIVE_META_STORE_HOST=$(curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_METASTORE \ | $JQ '.host_components[].HostRoles.host_name')
-HIVE_META_STORE_URI="thrift://$HIVE_META_STORE_HOST:9083"
+HIVE_META_STORE_URI="thrift://$PRIMARY_HEAD_NODE:9083"
 
 # get hiveServer2 hostname
 HIVE_SERVER2_HOST=$(curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_SERVER \ | $JQ '.host_components[].HostRoles.host_name')
-HIVE_SERVER2_URI="jdbc:hive2://$HIVE_SERVER2_HOST:10000"
+HIVE_SERVER2_URI="jdbc:hive2://$PRIMARY_HEAD_NODE:10000"
 
 echo "HIVE_META_STORE_HOST : $HIVE_META_STORE_HOST"
 echo "HIVE_META_STORE_URI : $HIVE_META_STORE_URI"
@@ -277,7 +277,7 @@ echo "-----------------OOZIE-----------------"
 
 ## get HDInsights Oozie configuration details
 OOZIE_SERVER_HOST=$(curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/OOZIE/components/OOZIE_SERVER \ | $JQ -r '.host_components[].HostRoles.host_name')
-OOZIE_SERVER_URL="http://$OOZIE_SERVER_HOST:11000/oozie"
+OOZIE_SERVER_URL="http://$PRIMARY_HEAD_NODE:11000/oozie"
 OOZIE_LIB_PATH="/user/oozie/share/lib"
 OOZIE_NAMENODE_URI="hdfs://$PRIMARY_HEAD_NODE:9000/"
 OOZIE_JOBTRACKER_URL="$OOZIE_SERVER_HOST:8032"
