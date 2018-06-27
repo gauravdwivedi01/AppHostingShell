@@ -32,7 +32,7 @@ sudo bash -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg mai
 #sudo bash -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc/apt/sources.list.d/pgdg.list"
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 apt-get -y update
-apt-get -y install postgresql-10 
+apt-get -y install postgresql-9.5 
 #postgres psql -U postgres -d postgres -c "alter user postgres with password 'postgres';"
 sudo -u postgres psql -c "alter user postgres with password 'postgres';"
 service postgresql restart
@@ -40,16 +40,16 @@ echo "Postgres installation completed"
 
 # update pgsql configuration
 echo "Updating postgres configuration on pg_hba.conf & postgresql.conf " 
-sudo cp /etc/postgresql/10/main/pg_hba.conf /etc/postgresql/10/main/pg_hba_1.conf
-sudo truncate -s 0 /etc/postgresql/10/main/pg_hba.conf
+sudo cp /etc/postgresql/9.5/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba_1.conf
+sudo truncate -s 0 /etc/postgresql/9.5/main/pg_hba.conf
 
-echo "local   all             postgres                                peer" | sudo tee -a /etc/postgresql/10/main/pg_hba.conf
-echo "# TYPE  DATABASE        USER            ADDRESS                 METHOD" | sudo tee -a /etc/postgresql/10/main/pg_hba.conf
-echo "local   all             all                                     md5" | sudo tee -a /etc/postgresql/10/main/pg_hba.conf
-echo "host    all             all             all                     md5" | sudo tee -a /etc/postgresql/10/main/pg_hba.conf
-echo "host    all             all             ::1/128                 md5" | sudo tee -a /etc/postgresql/10/main/pg_hba.conf
+echo "local   all             postgres                                peer" | sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf
+echo "# TYPE  DATABASE        USER            ADDRESS                 METHOD" | sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf
+echo "local   all             all                                     md5" | sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf
+echo "host    all             all             all                     md5" | sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf
+echo "host    all             all             ::1/128                 md5" | sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf
 
-echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/10/main/postgresql.conf
+echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.5/main/postgresql.conf
 
 # Restart postgress sql
 sudo service postgresql restart
