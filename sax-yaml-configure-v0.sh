@@ -51,8 +51,8 @@ function get_headnodes
         if (( $nn1hostnumber < $nn2hostnumber )); then
                         echo "$nn1host,$nn2host"
         else
-                        #echo "$nn2host,$nn1host"
-			echo "$nn1host,$nn2host"
+                        echo "$nn2host,$nn1host"
+			#echo "$nn1host,$nn2host"
         fi
     fi
 }
