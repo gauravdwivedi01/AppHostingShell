@@ -119,10 +119,10 @@ if [ -f "$SAX_DOWNLOAD_BUNDLE_PATH" ]
 fi
 
 ## dwonlaod JQ & unzip it
-cd "$SAX_HOME"
-retry 3 wget -O "$JQ_ZIP_NAME" "$JQ_DOWNLOAD_LINK"
-unzip jq.zip
-
+#cd "$SAX_HOME"
+#retry 3 wget -O "$JQ_ZIP_NAME" "$JQ_DOWNLOAD_LINK"
+#unzip jq.zip
+#apt install jq
 
 ## Install & Configure StreamAnalytix dependencies 
 echo "Installing StreamAnalytix dependencies with user : $(whoami)  & $SAX_HOME "
@@ -165,9 +165,3 @@ cp $SAX_HOME/mysql-connector-java-5.1.30.jar $SAX_INSTALLATION_DIR/server/tomcat
 echo "StreamAnalytix Installation completed successfully at HDInsight cluster's edgeNode !!"
 
 echo "----------------------------------------------------------------------"
-
-
-
-
-
-
