@@ -22,6 +22,9 @@ rabbitmqctl set_permissions -p / radmin ".*" ".*" ".*"
 service rabbitmq-server restart
 echo "Restarted RMQ , after adding new radmin user !!" 
 
+echo "---------------------- Install JQ ----------------------"
+apt-get -y install jq
+
 echo "---------------------- Install & Configure Postgres ----------------------"
 echo "Installing Postgres Server 9.3 on Edge Node with user : $(whoami) "
 
@@ -82,10 +85,3 @@ echo "Installing Postgres & DB Scripts Completed"
 
 echo "StreamAnalytix dependencies RMQ & MySQL & PGSQl installation completed at EdgeNode "
 echo "--------------------------------------------------------------------------------"
- 
-
-
-
-
-
-
