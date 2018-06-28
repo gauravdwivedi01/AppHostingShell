@@ -139,7 +139,7 @@ echo "Updated JAVA_HOME at serverStart script !!"
 
 #starting tomcat server 
 echo "Starting SAx server !!"
-#./startServicesServer.sh
+./startServicesServer.sh
 
 echo "StreamAnalytix Installation completed successfully at HDInsight cluster's edgeNode !!"
 
