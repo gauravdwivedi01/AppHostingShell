@@ -102,8 +102,8 @@ echo "SAX_HOST_IP : $SAX_HOST_IP"
 
 echo "SAX_CLUSTER_NAME : $CLUSTER_NAME"
 
-HDINSIGHT_URLBASE="http://$CLUSTER_NAME.azurehdinsight.net/api/v1/clusters/$CLUSTER_NAME"
-HDINSIGHT_CLUSTER_URL="http://$CLUSTER_NAME.azurehdinsight.net"
+HDINSIGHT_URLBASE="https://$CLUSTER_NAME.azurehdinsight.net/api/v1/clusters/$CLUSTER_NAME"
+HDINSIGHT_CLUSTER_URL="https://$CLUSTER_NAME.azurehdinsight.net"
 SAX_WEB_URL="http://$SAX_FULL_HOST_NAME:8090/StreamAnalytix"
 
 ## repalce StreamAnalytix app deatils at at env-config.yaml
