@@ -142,7 +142,7 @@ echo "ZOOKEEPER_HOSTS : $ZOOKEEPER_HOSTS"
 # make zkClient string as per env-config.yaml / config.properties
 
 YAML_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}":2181,; done| sed 's/,$//') ; 
-PROP_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}"'\:2181,'; done| sed 's/,$//') ;
+PROP_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}"'\\:2181,'; done| sed 's/,$//') ;
 echo "YAML_ZK_HOST : $YAML_ZK_HOST"
 echo "PROP_ZK_HOSTS : $PROP_ZK_HOST"
 
