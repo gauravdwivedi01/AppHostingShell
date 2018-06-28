@@ -105,7 +105,7 @@ echo "SAX_CLUSTER_NAME : $CLUSTER_NAME"
 HDINSIGHT_URLBASE="https://$CLUSTER_NAME.azurehdinsight.net/api/v1/clusters/$CLUSTER_NAME"
 HDINSIGHT_CLUSTER_URL="https://$CLUSTER_NAME.azurehdinsight.net"
 SAX_WEB_URL="http://$SAX_FULL_HOST_NAME:8090/StreamAnalytix"
-
+SAX_ZK_CONFIG_PARENT="/sax-config_$SAX_HOST_IP"
 ## repalce StreamAnalytix app deatils at at env-config.yaml
 sed -ri 's|^(\s*)(sax.installation.dir\s*:\s*"."\s*$)|\1sax.installation.dir: '"$SAX_INSTALLATION_DIR"'|' $YAML_FILE
 sed -ri 's|^(\s*)(sax.ui.host\s*:\s*localhost\s*$)|\1sax.ui.host: '"$SAX_FULL_HOST_NAME"'|' $YAML_FILE
@@ -129,6 +129,7 @@ echo "-----------------ZOOKEEPER_CLIENTS-----------------"
 
 ## get HDInsights zookeeper clients
 PROP_ZK_KEY="zk.hosts"
+PROP_ZK_CONF_PARENT_KEY="sax.zkconfig.parent"
 #echo "curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_CLIENT \ | jq '.host_components[].HostRoles.host_name'"
 ZOOKEEPER_CLIENTS=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_CLIENT \ | jq '.host_components[].HostRoles.host_name')
 
@@ -147,8 +148,9 @@ echo "PROP_ZK_HOSTS : $PROP_ZK_HOST"
 
 # replace zk.hosts at env-config.yaml
 sed -ri 's|^(\s*)(hosts\s*:\s*localhost:2181\s*$)|\1hosts: '"$YAML_ZK_HOST"'|' $YAML_FILE
-# replace hosts at config.properties zk.hosts=localhost\:2181
+# replace hosts at config.properties zk.hosts=localhost\:2181 sax.zkconfig.parent=/sax-config_localhost SAX_ZK_CONFIG_PARENT
 setProperty $PROP_ZK_KEY $PROP_ZK_HOST $PROP_FILE
+#setProperty $PROP_ZK_CONF_PARENT_KEY $SAX_ZK_CONFIG_PARENT $PROP_FILE
 #sed -ri 's|^(\s*)(zk.hosts\s*:\s*localhost\:2181\s*$)|\zk.hosts: '"$PROP_ZK_HOST"'|' $PROP_FILE
 
 echo "-----------------SAx Database-----------------"
@@ -163,19 +165,6 @@ echo "JDBC_USERNAME : $JDBC_USERNAME"
 echo "JDBC_PASSWORD : $JDBC_PASSWORD"
 echo "JDBC_DRIVER : $JDBC_DRIVER"
 echo "JDBC_URL : $JDBC_URL"
-
-
-driver: "org.hsqldb.jdbc.JDBCDriver"
-      #driver: org.postgresql.Driver
-      #driver: com.mysql.jdbc.Driver
-      #driver: oracle.jdbc.driver.OracleDriver
-      #url: "jdbc:postgresql://localhost:5432/streamanalytix"
-      url: "jdbc:hsqldb:hsql://localhost:9001/saxhsqldb"
-      #url: "jdbc:mysql://localhost:3306/streamanalytix"
-      #url: "jdbc:oracle:thin:@localhost:1521:SAX"
-      username: "SA"
-      password: ""
-
 
 ## replace jdbc configurations at env-config.yaml
 sed -ri 's|^(\s*)(driver\s*:\s*"org.hsqldb.jdbc.JDBCDriver"\s*$)|\1#driver: '"org.hsqldb.jdbc.JDBCDriver"'|' $YAML_FILE
