@@ -211,30 +211,6 @@ echo "SAX_METRIC_SERVER : $SAX_METRIC_SERVER"
 sed -ri 's|^(\s*)(collector.host\s*:\s*localhost\s*$)|\1collector.host: '"$AMBARI_COLLECTOR_HOST"'|' $YAML_FILE
 sed -ri 's|^(\s*)(sax.metric.server\s*:\s*ambari\s*$)|\1sax.metric.server: '"$SAX_METRIC_SERVER"'|' $YAML_FILE
 
-echo "-----------------SPARK-----------------"
-
-## get HDInsights SPARK2 configuration details
-SPARK_CLUSTER_MANAGER="yarn"
-## get HDInsights YARN resource manager 
-YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
-
-## get HDInsights Spark History Server
-SPARK_HISTORY_SERVER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/SPARK2/components/SPARK2_JOBHISTORYSERVER \ | jq -r '.host_components[].HostRoles.host_name')
-SPARK_HISTORY_SERVER_URI="$SPARK_HISTORY_SERVER:18080"
-SPARK_YARN_RESOURCE_MANAGER_HOST=$YARN_RESOURCE_MANAGER
-SPARK_JOB_SUBMIT_MODE="spark-submit"
-
-
-echo "YARN_RESOURCE_MANAGER : $PRIMARY_HEAD_NODE"
-echo "SPARK_YARN_RESOURCE_MANAGER_HOST : $SPARK_YARN_RESOURCE_MANAGER_HOST" 
-echo "SPARK_HISTORY_SERVER : $SPARK_HISTORY_SERVER"
-## replace SPARK2 configurations at env-config.yaml
-
-sed -ri 's|^(\s*)(home\s*:\s*/usr/hdp/2.4.2.0-258/spark\s*$)|\1home: '"$SPARK_HOME"'|' $YAML_FILE
-sed -ri 's|^(\s*)(cluster.manager\s*:\s*"standalone"\s*$)|\1cluster.manager: '"yarn"'|' $YAML_FILE
-sed -ri 's|^(\s*)(history.server\s*:\s*"localhost:18080"\s*$)|\1history.server: '"$SPARK_HISTORY_SERVER_URI"'|' $YAML_FILE
-sed -ri 's|^(\s*)(resource.manager.host\s*:\s*localhost\s*$)|\1resource.manager.host: '"$PRIMARY_HEAD_NODE"'|' $YAML_FILE
-
 echo "-----------------HDFS-----------------"
 
 ## get HDInsights HDFS configuration details
@@ -259,6 +235,31 @@ sed -ri 's|^(\s*)(hdfs.uri\s*:\s*"hdfs://localhost:9000/"\s*$)|\1hdfs.uri: '"$HA
 sed -ri 's|^(\s*)(dfs.nameservices\s*:\s*""\s*$)|\1dfs.nameservices: '"$HADOOP_DFS_NAMESERVICE"'|' $YAML_FILE
 sed -ri 's|^(\s*)(dfs.namenode1.details\s*:\s*""\s*$)|\1dfs.namenode1.details: '"$HADOOP_DFS_NAMENODE1_DETAILS"'|' $YAML_FILE
 sed -ri 's|^(\s*)(dfs.namenode2.details\s*:\s*""\s*$)|\1dfs.namenode2.details: '"$HADOOP_DFS_NAMENODE2_DETAILS"'|' $YAML_FILE
+
+echo "-----------------SPARK-----------------"
+
+## get HDInsights SPARK2 configuration details
+SPARK_CLUSTER_MANAGER="yarn"
+## get HDInsights YARN resource manager 
+YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
+
+## get HDInsights Spark History Server
+SPARK_HISTORY_SERVER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/SPARK2/components/SPARK2_JOBHISTORYSERVER \ | jq -r '.host_components[].HostRoles.host_name')
+SPARK_HISTORY_SERVER_URI="$SPARK_HISTORY_SERVER:18080"
+SPARK_YARN_RESOURCE_MANAGER_HOST=$YARN_RESOURCE_MANAGER
+SPARK_JOB_SUBMIT_MODE="spark-submit"
+
+
+echo "YARN_RESOURCE_MANAGER : $PRIMARY_HEAD_NODE"
+echo "SPARK_YARN_RESOURCE_MANAGER_HOST : $SPARK_YARN_RESOURCE_MANAGER_HOST" 
+echo "SPARK_HISTORY_SERVER : $SPARK_HISTORY_SERVER"
+## replace SPARK2 configurations at env-config.yaml
+
+sed -ri 's|^(\s*)(home\s*:\s*/usr/hdp/2.4.2.0-258/spark\s*$)|\1home: '"$SPARK_HOME"'|' $YAML_FILE
+sed -ri 's|^(\s*)(cluster.manager\s*:\s*"standalone"\s*$)|\1cluster.manager: '"yarn"'|' $YAML_FILE
+sed -ri 's|^(\s*)(history.server\s*:\s*"localhost:18080"\s*$)|\1history.server: '"$SPARK_HISTORY_SERVER_URI"'|' $YAML_FILE
+sed -ri 's|^(\s*)(resource.manager.host\s*:\s*localhost\s*$)|\1resource.manager.host: '"$PRIMARY_HEAD_NODE"'|' $YAML_FILE
+
 
 echo "-----------------HIVE-----------------" 
 
