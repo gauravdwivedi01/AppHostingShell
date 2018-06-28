@@ -57,8 +57,8 @@ echo "host  all   ambari,mapred ::/0 md5" | sudo tee -a $PG_HBA_CONF_PATH
 sudo service postgresql restart
 
 sudo -u postgres psql << EOF
-create database stanalytix;
-grant all privileges on database stanalytix to saxpostgres;
+create database $DB_NAME;
+grant all privileges on database $DB_NAME to $DB_USER;
 EOF
 
 
