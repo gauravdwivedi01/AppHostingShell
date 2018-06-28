@@ -155,8 +155,8 @@ echo "Starting SAx server !!"
 ./startServicesServer.sh
 
 #copying mysql jar to WEB-INF/lib
-echo "Moving mysql-connector jar to WEB-INF/lib !!"
-cp $SAX_HOME/mysql-connector-java-5.1.30.jar $SAX_INSTALLATION_DIR/server/tomcat/webapps/StreamAnalytix/WEB-INF/lib/
+#echo "Moving mysql-connector jar to WEB-INF/lib !!"
+#cp $SAX_HOME/mysql-connector-java-5.1.30.jar $SAX_INSTALLATION_DIR/server/tomcat/webapps/StreamAnalytix/WEB-INF/lib/
 
 echo "StreamAnalytix Installation completed successfully at HDInsight cluster's edgeNode !!"
 
