@@ -10,7 +10,7 @@ SAX_DOWNLOAD_CHECKSUM="0f6ce145d4094eab62d1ea76e6eb5a30"
 SAX_DOWNLOAD_LINK="https://arrival.streamanalytix.com/nextcloud/index.php/s/E9oFxj5e92dFAYA/download"
 SAX_DEPENDENCY_DOWNLOAD_LINK="https://raw.githubusercontent.com/gauravdwivedi01/AppHostingShell/master/sax-dependencies-install-v0.sh"
 SAX_MYSQL_DOWNLOAD_LINK="http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"
-SAX_CONF_DOWNLOAD_LINK="https://github.com/gauravdwivedi01/AppHostingShell/blob/master/sax-yaml-configure-v0.sh"
+SAX_CONF_DOWNLOAD_LINK="https://raw.githubusercontent.com/gauravdwivedi01/AppHostingShell/master/sax-yaml-configure-v0.sh"
 JQ_DOWNLOAD_LINK="https://github.com/gauravdwivedi01/AppHostingShell/blob/master/jq.zip"
 SAX_HOME="/saxHdInsightApp/"
 SAX_DOWNLOAD_JAR_NAME="StreamAnalytix-3.1.5-SNAPSHOT.tar.gz"
@@ -137,10 +137,6 @@ echo "Configuring StreamAnalytix env-conf.yaml & config.properties with user : $
 cd "$SAX_HOME"
 retry 3 wget -O "$SAX_CONF_SHELL_NAME" "$SAX_CONF_DOWNLOAD_LINK"
 chmod 755 $SAX_CONF_SHELL_NAME
-CLUSTER_NAME=$1
-HDI_ADMIN=$2
-SSH_USER=$3
-SSH_PWD=$4
 ./sax-yaml-configure-v0.sh $CLUSTER_NAME $HDI_ADMIN $SSH_USER $SSH_PWD
 echo "Installing StreamAnalytix dependencies completed !! "
 
