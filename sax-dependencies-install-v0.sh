@@ -67,21 +67,21 @@ echo "Running DDL/DML scripts for streamanalytix "
 
 sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_1.2/streamanalytix_DDL.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_1.2/streamanalytix_DML.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_1.2/streamanalytix_DML.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.0/streamanalytix_DDL.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.0/streamanalytix_DDL.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.0/streamanalytix_DML.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.0/streamanalytix_DML.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.2/streamanalytix_DDL.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.2/streamanalytix_DDL.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.2/streamanalytix_DML.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_2.2/streamanalytix_DML.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/streamanalytix_DDL.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/streamanalytix_DDL.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/streamanalytix_DML.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/streamanalytix_DML.sql
 
-sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER'' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/Ticket_DML.sql
+sudo -u postgres psql "dbname='$DB_NAME' user='$DB_USER' password='$DB_PWD'" -f $SAX_INSTALLATION_DIR/db_dump/pgsql_3.0/Ticket_DML.sql
 
 echo "Installing Postgres & DB Scripts Completed" 
 
