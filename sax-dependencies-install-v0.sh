@@ -43,7 +43,7 @@ sudo truncate -s 0 $PG_HBA_CONF_PATH
 
 echo "local   all             postgres                                peer" | sudo tee -a $PG_HBA_CONF_PATH
 echo "# TYPE  DATABASE        USER            ADDRESS                 METHOD" | sudo tee -a $PG_HBA_CONF_PATH
-echo "local   all             postgres                                peer" | sudo tee -a $PG_HBA_CONF_PATH
+echo "local   all             all                                     md5" | sudo tee -a $PG_HBA_CONF_PATH
 echo "host    all             all             all                     md5" | sudo tee -a $PG_HBA_CONF_PATH
 echo "host    all             all             ::1/128                 md5" | sudo tee -a $PG_HBA_CONF_PATH
 
