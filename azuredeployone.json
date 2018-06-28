@@ -1,0 +1,109 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "type": "String",
+            "metadata": {
+                "description": "Name of the existing HDInsight cluster where StreamAnalytix will be installed."
+            }
+        },
+        "galleryPackageIdentity": {
+            "defaultValue": "StreamAnalytix",
+            "type": "String",
+            "metadata": {
+                "description": "Marketplace Identifier of the application."
+            }
+        },
+        "edgeNodeSize": {
+            "defaultValue": "Standard_D12_V2",
+            "allowedValues": [
+                "Standard_D12_V2",
+                "Standard_D13_V2",
+                "Standard_D13_V3",
+                "Standard_D14_V2"
+            ],
+            "type": "String",
+            "metadata": {
+                "description": "Size of the edge node which will host StreamAnalytix."
+            }
+        },
+        "adminUserName": {
+            "defaultValue": "admin",
+            "type": "String",
+            "metadata": {
+                "description": "The admin user name can be used for rest calls."
+            }
+        },
+        "sshUserName": {
+            "defaultValue": "sshuser",
+            "type": "String",
+            "metadata": {
+                "description": "These credentials can be used to remotely access the cluster."
+            }
+        },
+        "sshPassword": {
+            "type": "SecureString",
+            "metadata": {
+                "description": "The password of sshUserName."
+            }
+        }
+    },
+    "variables": {
+        "saxPort": 8090,
+        "saxVersion": "latest",
+        "subdomainSuffix": "stm",
+        "applicationName": "stream",
+        "disableGatewayAuth": true
+    },
+    "resources": [
+        {
+            "type": "Microsoft.HDInsight/clusters/applications",
+            "name": "[concat(parameters('clusterName'), '/', variables('applicationName'))]",
+            "apiVersion": "2015-03-01-preview",
+            "properties": {
+                "marketPlaceIdentifier": "[parameters('galleryPackageIdentity')]",
+                "computeProfile": {
+                    "roles": [
+                        {
+                            "name": "edgenode",
+                            "targetInstanceCount": 1,
+                            "hardwareProfile": {
+                                "vmSize": "[parameters('edgeNodeSize')]"
+                            }
+                        }
+                    ]
+                },
+                "installScriptActions": [
+                    {
+                        "name": "[concat('sax-install-v0', variables('applicationName'))]",
+                        "uri": "https://raw.githubusercontent.com/gauravdwivedi01/AppHostingShell/master/sax-install-v0.sh",
+                        "parameters": "[concat(parameters('clusterName'), ' ', parameters('adminUserName'), ' ', parameters('sshUserName'), ' ', parameters('sshPassword'))]",
+                        "roles": [
+                            "edgenode"
+                        ]
+                    }
+                ],
+                "httpsEndpoints": [
+                    {
+                        "subDomainSuffix": "[variables('subdomainSuffix')]",
+                        "destinationRole": "edgenode",
+                        "destinationPort": 8090,
+                        "hasWebpage": true,
+                        "disableGatewayAuth": "[variables('disableGatewayAuth')]",
+                        "accessModes": [
+                            "WebPage"
+                        ]
+                    }
+                ],
+                "applicationType": "CustomApplication"
+            }
+        }
+    ],
+    "outputs": {
+        "application": {
+            "type": "Object",
+            "value": "[reference(resourceId('Microsoft.HDInsight/clusters/applications/', parameters('clusterName'), variables('applicationName')))]"
+        }
+    }
+}
