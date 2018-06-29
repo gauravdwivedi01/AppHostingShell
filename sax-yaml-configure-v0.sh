@@ -259,7 +259,8 @@ sed -ri 's|^(\s*)(home\s*:\s*/usr/hdp/2.4.2.0-258/spark\s*$)|\1home: '"$SPARK_HO
 sed -ri 's|^(\s*)(cluster.manager\s*:\s*"standalone"\s*$)|\1cluster.manager: '"yarn"'|' $YAML_FILE
 sed -ri 's|^(\s*)(history.server\s*:\s*"localhost:18080"\s*$)|\1history.server: '"$SPARK_HISTORY_SERVER_URI"'|' $YAML_FILE
 sed -ri 's|^(\s*)(resource.manager.host\s*:\s*localhost\s*$)|\1resource.manager.host: '"$PRIMARY_HEAD_NODE"'|' $YAML_FILE
-
+sed -ri 's|^(\s*)(resource.manager.isHA\s*:\s*"false"s*$)|\1resource.manager.isHA: 'true'|' $YAML_FILE
+sed -ri 's|^(\s*)(resource.manager.ha.address.hosts\s*:\s*"localhost1:8032,localhost2:8032"s*$)|\1resource.manager.ha.address.hosts: '"$RM_HA_HOSTS"'|' $YAML_FILE
 
 echo "-----------------HIVE-----------------" 
 
