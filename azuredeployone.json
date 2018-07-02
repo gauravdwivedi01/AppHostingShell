@@ -52,8 +52,8 @@
     "variables": {
         "saxPort": 8090,
         "saxVersion": "latest",
-        "subdomainSuffix": "stm",
-        "applicationName": "stream",
+        "subdomainSuffix": "sax",
+        "applicationName": "streamanalytix",
         "disableGatewayAuth": true
     },
     "resources": [
