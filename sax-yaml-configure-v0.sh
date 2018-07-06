@@ -307,6 +307,10 @@ sed -ri 's|^(\s*)(jobtrackerURL\s*:\s*"localhost:8032"\s*$)|\1jobtrackerURL: '"$
 
 echo "env-config.yaml & config.properties file updation completed successfully !!"
 
+## renaming conf/yaml/env-config.yaml & moving cloud-conf-template.yaml to conf/yaml
+
+mv $YAML_FILE $BKP_YAML_FILE
+cp $CLOUD_TEMPLATE_YAML_FILE $YAML_FILE
 ##echo "-----------------AMBARI_SERVICES-----------------"
 
 ##AMBARI_SERVICES=$(curl -u $HDI_CREDS -X GET $HDINSIGHT_URLBASE/services | grep service_name| awk -F":" '{print $2}')
