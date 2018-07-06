@@ -14,6 +14,7 @@ YAML_ZK_PORT=":2181,"
 PROP_ZK_PORT="\:2181,"
 SPARK_HOME="/usr/hdp/2.6.2.38-1/spark2"
 YAML_FILE="$SAX_INSTALLATION_DIR/conf/yaml/env-config.yaml"
+CLOUD_TEMPLATE_YAML="$SAX_INSTALLATION_DIR/conf/yaml/templates/azure-template/cloud-conf-template.yaml"
 PROP_FILE="$SAX_INSTALLATION_DIR/conf/config.properties"
 
 
