@@ -1,0 +1,110 @@
+Install JAVA : 
+
+add-apt-repository -y ppa:webupd8team/java
+apt-get update
+apt-get -y install oracle-java8-installer
+
+
+Install Azure CLI
+	 https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
+
+Prepare an Ubuntu virtual machine for Azure
+	https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-upload-ubuntu?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json
+
+Create a custom image of an Azure VM with the Azure CLI 2.0
+	https://docs.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-custom-images
+
+------------------------------------------------------------------------------------------------------------------------------------------
+Login to azure machine 
+	# ssh saxadmin@13.66.164.98
+
+Replace the current repositories in the image to use Ubuntu's Azure repos
+	 # sudo sed -i 's/[a-z][a-z].archive.ubuntu.com/azure.archive.ubuntu.com/g' /etc/apt/sources.list
+ 	 # sudo apt-get update
+
+The Ubuntu Azure images are now following the hardware enablement (HWE) kernel. Update the operating system to the latest kernel
+	# sudo apt-get update
+ 	# sudo apt-get install -y linux-generic-hwe-16.04 linux-cloud-tools-generic-hwe-16.04
+ 	# sudo apt-get -y dist-upgrade
+
+Modify the kernel boot line for Grub to include additional kernel parameters for Azure. 
+	# vi /etc/default/grub
+	# update / add GRUB_CMDLINE_LINUX_DEFAULT and edit it to include the following parameters
+           GRUB_CMDLINE_LINUX_DEFAULT="console=tty1 console=ttyS0,115200n8 earlyprintk=ttyS0,115200 rootdelay=300"
+	# sudo update-grub
+
+Ensure that the SSH server is installed and configured to start at boot time.
+	# chk with '/etc/init.d/ssh status' or 'ps aux | grep ssh' or 'ps -A | grep sshd'
+
+Install the Azure Linux Agent
+	 # sudo apt-get update
+ 	 # sudo apt-get install walinuxagent
+
+Deprovision the virtual machine
+
+	# sudo waagent -force -deprovision
+	# export HISTSIZE=0
+	# logout
+------------------------------------------------------------------------------------------------------------------------------------------
+## sudo waagent -deprovision+user #-force
+
+## az vm deallocate --resource-group saxvmtest1107rgrp --name saxvmtest1107
+
+	RESPONSE -- > {
+	  "endTime": "2018-07-10T12:32:23.515404+00:00",
+	  "error": null,
+	  "name": "2511e056-dfd1-4b2e-8016-fd85919a962b",
+	  "startTime": "2018-07-10T12:30:21.242682+00:00",
+	  "status": "Succeeded"
+	}
+
+## az vm generalize --resource-group saxvmtest1107rgrp --name saxvmtest1107
+
+## az image create --resource-group saxvmtest1107rgrp --name saxvmtest1107Image --source saxvmtest1107 
+
+	RESPONSE -- > {
+  "id": "/subscriptions/77b85832-50f5-4f38-81c6-34b89d67ab7e/resourceGroups/saxubuntuvmrgrp/providers/Microsoft.Compute/images/SaxUbuntuVmImage07",
+  "location": "westus2",
+  "name": "SaxUbuntuVmImage07",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "saxubuntuvmrgrp",
+  "sourceVirtualMachine": {
+    "id": "/subscriptions/77b85832-50f5-4f38-81c6-34b89d67ab7e/resourceGroups/saxubuntuvmrgrp/providers/Microsoft.Compute/virtualMachines/saxubuntuvm07",
+    "resourceGroup": "saxubuntuvmrgrp"
+  },
+  "storageProfile": {
+    "dataDisks": [],
+    "osDisk": {
+      "blobUri": null,
+      "caching": "ReadWrite",
+      "diskSizeGb": 30,
+      "managedDisk": {
+        "id": "/subscriptions/77b85832-50f5-4f38-81c6-34b89d67ab7e/resourceGroups/saxubuntuvmrgrp/providers/Microsoft.Compute/disks/saxubuntuvm07_OsDisk_1_fd0e9ef1bab642218b4db3b8afd45466",
+        "resourceGroup": "saxubuntuvmrgrp"
+      },
+      "osState": "Generalized",
+      "osType": "Linux",
+      "snapshot": null,
+      "storageAccountType": "Standard_LRS"
+    },
+    "zoneResilient": null
+  },
+  "tags": {},
+  "type": "Microsoft.Compute/images"
+}
+
+
+## az image list --resource-group saxubuntuvmrgrp
+
+## az vm create --resource-group saxubuntuvmrgrp --name saxubuntunewvmfromvm0707 --image SaxUbuntuVmImage07 --admin-username saxadmin --generate-ssh-keys	
+
+## az image show --name saxvmtest1107Image  --resource-group saxvmtest1107rgrp
+Logic9718416426
+wget https://github.com/gauravdwivedi01/HdInsightAppHosting/blob/master/ExportedTemplate-Microsoft.Template15052018.zip
+wget https://github.com/gauravdwivedi01/HdInsightAppHosting/blob/master/mysql-connector-java-5.1.30.jar
+wget https://github.com/gauravdwivedi01/HdInsightAppHosting/blob/master/mysql-connector-java-5.1.41.jar
+wget http://www.datanucleus.org/downloads/maven2/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar
+wget https://github.com/gauravdwivedi01/AppHostingShell/blob/master/sax-pyag-dependencies-install-v0.sh
+------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------
