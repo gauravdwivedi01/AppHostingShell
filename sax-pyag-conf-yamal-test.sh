@@ -14,7 +14,7 @@ YAML_ZK_PORT=":2181,"
 PROP_ZK_PORT="\:2181,"
 SPARK_HOME="/usr/hdp/2.6.2.38-1/spark2"
 YAML_FILE="$SAX_INSTALLATION_DIR/conf/yaml/env-config.yaml"
-CLOUD_TEMPLATE_YAML="$SAX_INSTALLATION_DIR/conf/yaml/templates/azure-template/cloud-conf-template.yaml"
+CLOUD_TEMPLATE_YAML="$SAX_INSTALLATION_DIR/conf/yaml/templates/azure-template/env-config.yaml"
 PROP_FILE="$SAX_INSTALLATION_DIR/conf/config.properties"
 
 
@@ -67,7 +67,7 @@ sed -ri 's|^(\s*)(clustername\s*:\s*""\s*$)|\1clustername: '"$CLUSTER_NAME"'|' $
 echo "-----------------YARN_RESOURCE_MANAGER-----------------"
 
 ## get HDInsights YARN resource manager 
-YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
+## YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
 echo "YARN_RESOURCE_MANAGER : $SAX_FULL_HOST_NAME"
 
 echo "-----------------ZOOKEEPER_CLIENTS-----------------"
@@ -78,23 +78,23 @@ PROP_ZK_CONF_PARENT_KEY="sax.zkconfig.parent"
 #echo "curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_CLIENT \ | jq '.host_components[].HostRoles.host_name'"
 #ZOOKEEPER_CLIENTS=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_CLIENT \ | jq '.host_components[].HostRoles.host_name')
 
-echo "curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_SERVER \ | jq -r '.host_components | map(.HostRoles.host_name) | join("##")'"
-ZOOKEEPER_HOSTS=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_SERVER \ | jq -r '.host_components | map(.HostRoles.host_name) | join("##")')
+## echo "curl -s -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_SERVER \ | jq -r '.host_components | map(.HostRoles.host_name) | join("##")'"
+## ZOOKEEPER_HOSTS=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/ZOOKEEPER/components/ZOOKEEPER_SERVER \ | jq -r '.host_components | map(.HostRoles.host_name) | join("##")')
 
 #echo "ZOOKEEPER_CLIENTS : $ZOOKEEPER_CLIENTS" 
-echo "ZOOKEEPER_HOSTS : $ZOOKEEPER_HOSTS"
+## echo "ZOOKEEPER_HOSTS : $ZOOKEEPER_HOSTS"
 
 # make zkClient string as per env-config.yaml / config.properties
 
-YAML_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}":2181,; done| sed 's/,$//') ; 
-PROP_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}"'\\:2181,'; done| sed 's/,$//') ;
-echo "YAML_ZK_HOST : $YAML_ZK_HOST"
-echo "PROP_ZK_HOSTS : $PROP_ZK_HOST"
+## YAML_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}":2181,; done| sed 's/,$//') ; 
+## PROP_ZK_HOST=$(for ZK_HOST in ${ZOOKEEPER_HOSTS//##/ }; do echo -n "${ZK_HOST}"'\\:2181,'; done| sed 's/,$//') ;
+## echo "YAML_ZK_HOST : $YAML_ZK_HOST"
+## echo "PROP_ZK_HOSTS : $PROP_ZK_HOST"
 
 # replace zk.hosts at env-config.yaml
-sed -ri 's|^(\s*)(hosts\s*:\s*localhost:2181\s*$)|\1hosts: '"$YAML_ZK_HOST"'|' $CLOUD_TEMPLATE_YAML_FILE
+## sed -ri 's|^(\s*)(hosts\s*:\s*localhost:2181\s*$)|\1hosts: '"$YAML_ZK_HOST"'|' $CLOUD_TEMPLATE_YAML_FILE
 # replace hosts at config.properties zk.hosts=localhost\:2181 sax.zkconfig.parent=/sax-config_localhost SAX_ZK_CONFIG_PARENT
-setProperty $PROP_ZK_KEY $PROP_ZK_HOST $PROP_FILE
+## setProperty $PROP_ZK_KEY $PROP_ZK_HOST $PROP_FILE
 #setProperty $PROP_ZK_CONF_PARENT_KEY $SAX_ZK_CONFIG_PARENT $PROP_FILE
 #sed -ri 's|^(\s*)(zk.hosts\s*:\s*localhost\:2181\s*$)|\zk.hosts: '"$PROP_ZK_HOST"'|' $PROP_FILE
 
@@ -147,7 +147,7 @@ echo "-----------------METRIC_COLLECTOR-----------------"
 ## get Ambari Metric Collector configuration details
 SAX_METRIC_SERVER="ambari"
 AMBARI_COLLECTOR_PORT="6188"
-AMBARI_COLLECTOR_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/AMBARI_METRICS/components/METRICS_COLLECTOR \ | jq -r '.host_components[].HostRoles.host_name')
+## AMBARI_COLLECTOR_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/AMBARI_METRICS/components/METRICS_COLLECTOR \ | jq -r '.host_components[].HostRoles.host_name')
 
 echo "AMBARI_COLLECTOR_HOST : $SAX_FULL_HOST_NAME"
 echo "SAX_METRIC_SERVER : $SAX_METRIC_SERVER"
@@ -159,9 +159,9 @@ sed -ri 's|^(\s*)(sax.metric.server\s*:\s*ambari\s*$)|\1sax.metric.server: '"$SA
 echo "-----------------HDFS-----------------"
 
 ## get HDInsights HDFS configuration details
-PRIMARY_HEAD_NODE=`get_primary_headnode`
-SECONDARY_HEAD_NODE=`get_secondary_headnode`
-HADOOP_DFS_NAMESERVICE=`get_dfs_nameservice`
+## PRIMARY_HEAD_NODE=`get_primary_headnode`
+## SECONDARY_HEAD_NODE=`get_secondary_headnode`
+## HADOOP_DFS_NAMESERVICE=`get_dfs_nameservice`
 
 HADOOP_HDFS_URI="hdfs://mycluster"
 HADOOP_DFS_NAMENODE1_DETAILS="nn1,$SAX_FULL_HOST_NAME:8020"
@@ -186,10 +186,10 @@ echo "-----------------SPARK-----------------"
 ## get HDInsights SPARK2 configuration details
 SPARK_CLUSTER_MANAGER="yarn"
 ## get HDInsights YARN resource manager 
-YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
+## YARN_RESOURCE_MANAGER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/YARN/components/RESOURCEMANAGER \ | jq '.host_components[].HostRoles.host_name')
 
 ## get HDInsights Spark History Server
-SPARK_HISTORY_SERVER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/SPARK2/components/SPARK2_JOBHISTORYSERVER \ | jq -r '.host_components[].HostRoles.host_name')
+## SPARK_HISTORY_SERVER=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/SPARK2/components/SPARK2_JOBHISTORYSERVER \ | jq -r '.host_components[].HostRoles.host_name')
 SPARK_HISTORY_SERVER_URI="$SAX_FULL_HOST_NAME:18080"
 SPARK_YARN_RESOURCE_MANAGER_HOST=$SAX_FULL_HOST_NAME
 SPARK_JOB_SUBMIT_MODE="spark-submit"
@@ -211,11 +211,11 @@ sed -ri 's|^(\s*)(resource.manager.ha.address.hosts\s*:\s*"localhost1:8032,local
 echo "-----------------HIVE-----------------" 
 
 # get hive meta store hostname
-HIVE_META_STORE_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_METASTORE \ | jq '.host_components[].HostRoles.host_name')
+## HIVE_META_STORE_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_METASTORE \ | jq '.host_components[].HostRoles.host_name')
 HIVE_META_STORE_URI="thrift://$PRIMARY_HEAD_NODE:9083"
 
 # get hiveServer2 hostname
-HIVE_SERVER2_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_SERVER \ | jq '.host_components[].HostRoles.host_name')
+## HIVE_SERVER2_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/HIVE/components/HIVE_SERVER \ | jq '.host_components[].HostRoles.host_name')
 HIVE_SERVER2_URI="jdbc:hive2://$PRIMARY_HEAD_NODE:10000"
 
 echo "HIVE_META_STORE_HOST : $SAX_FULL_HOST_NAME"
@@ -229,7 +229,7 @@ sed -ri 's|^(\s*)(hiveServer2\s*:\s*jdbc:hive2://localhost:10000\s*$)|\1hiveServ
 echo "-----------------OOZIE-----------------"
 
 ## get HDInsights Oozie configuration details
-OOZIE_SERVER_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/OOZIE/components/OOZIE_SERVER \ | jq -r '.host_components[].HostRoles.host_name')
+## OOZIE_SERVER_HOST=$(curl -sS -G -u $HDI_CREDS $HDINSIGHT_URLBASE/services/OOZIE/components/OOZIE_SERVER \ | jq -r '.host_components[].HostRoles.host_name')
 OOZIE_SERVER_URL="http://$SAX_FULL_HOST_NAME:11000/oozie"
 OOZIE_LIB_PATH="/user/oozie/share/lib"
 OOZIE_NAMENODE_URI="hdfs://$SAX_FULL_HOST_NAME:9000/"
