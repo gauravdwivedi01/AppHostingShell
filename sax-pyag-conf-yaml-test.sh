@@ -14,7 +14,7 @@ YAML_ZK_PORT=":2181,"
 PROP_ZK_PORT="\:2181,"
 SPARK_HOME="/usr/hdp/2.6.2.38-1/spark2"
 YAML_FILE="$SAX_INSTALLATION_DIR/conf/yaml/env-config.yaml"
-CLOUD_TEMPLATE_YAML="/opt/StreamAnalytix/conf/yaml/templates/azure-template/env-config.yaml"
+CLOUD_TEMPLATE_YAML_FILE="/opt/StreamAnalytix/conf/yaml/templates/azure-template/env-config.yaml"
 PROP_FILE="$SAX_INSTALLATION_DIR/conf/config.properties"
 CLOUD_TEMPLATE_LOC="/opt/StreamAnalytix/conf/yaml/templates/azure-template/"
 
@@ -28,11 +28,11 @@ echo "HDI_ADMIN is : $HDI_ADMIN"
 echo "SSH_PWD is : $SSH_PWD" 
 echo "--------------------------------------------------------------------------------"
 
-if [ -s $CLOUD_TEMPLATE_YAML ]
+if [ -s $CLOUD_TEMPLATE_YAML_FILE ]
 then
-   echo "CLOUD_TEMPLATE_YAML $CLOUD_TEMPLATE_YAML is available"
+   echo "CLOUD_TEMPLATE_YAML_FILE $CLOUD_TEMPLATE_YAML_FILE is available"
 else
-      echo "CLOUD_TEMPLATE_YAML File is not available"
+      echo "CLOUD_TEMPLATE_YAML_FILE File is not available"
 fi
 
 if [ -d "$SAX_HOME" ]; then
