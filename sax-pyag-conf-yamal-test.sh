@@ -27,6 +27,24 @@ echo "HDI_ADMIN is : $HDI_ADMIN"
 echo "SSH_PWD is : $SSH_PWD" 
 echo "--------------------------------------------------------------------------------"
 
+if [ -s $CLOUD_TEMPLATE_YAML ]
+then
+   echo "CLOUD_TEMPLATE_YAML $CLOUD_TEMPLATE_YAML is available"
+else
+      echo "CLOUD_TEMPLATE_YAML File is not available"
+fi
+
+if [ -d "$SAX_HOME" ]; then
+  echo "sax_home $SAX_HOME already exists !!"    
+fi
+
+echo "Listing files in SAX_HOME !!"
+for entry in "$SAX_HOME"/*
+do
+  echo "$entry"
+done
+echo "--------------------------------------------------------------------------------"
+
 #following functions are used to determine headnodes. 
 #Returns fully qualified headnode names separated by comma by inspecting hdfs-site.xml.
 #Returns empty string in case of errors.
