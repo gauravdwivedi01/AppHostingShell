@@ -16,6 +16,7 @@ SPARK_HOME="/usr/hdp/2.6.2.38-1/spark2"
 YAML_FILE="$SAX_INSTALLATION_DIR/conf/yaml/env-config.yaml"
 CLOUD_TEMPLATE_YAML="/opt/StreamAnalytix/conf/yaml/templates/azure-template/env-config.yaml"
 PROP_FILE="$SAX_INSTALLATION_DIR/conf/config.properties"
+CLOUD_TEMPLATE_LOC="/opt/StreamAnalytix/conf/yaml/templates/azure-template/"
 
 
 echo "--------------------------------------------------------------------------------"
@@ -43,6 +44,8 @@ for entry in "$SAX_HOME"/*
 do
   echo "$entry"
 done
+echo "--------------------------------------------------------------------------------"
+find $CLOUD_TEMPLATE_LOC -type f
 echo "--------------------------------------------------------------------------------"
 
 #following functions are used to determine headnodes. 
